@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x 
+set -ex 
 #Muestra comandos
 echo "Esto es una prueba"
 #Actualizar repo
