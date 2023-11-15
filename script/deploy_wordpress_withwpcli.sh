@@ -48,5 +48,4 @@ wp core install \
   --admin_email=$CERTIFICATE_EMAIL\
   --path=/var/www/html \
   --allow-root
-
-#chown -R www-data:www-data /var/www/html 
+chown -R www-data:www-data /var/www/html 
