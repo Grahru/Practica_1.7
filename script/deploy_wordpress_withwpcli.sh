@@ -48,4 +48,12 @@ wp core install \
   --admin_email=$CERTIFICATE_EMAIL\
   --path=/var/www/html \
   --allow-root
+
+# Habilitar el módulo rewrite
+a2enmod rewrite
+
+# reiniciar el servicio de Apache.
+
+systemctl restart apache2
+cp ../htaccess/.htaccess /var/www/html
 chown -R www-data:www-data /var/www/html 
