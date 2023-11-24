@@ -57,3 +57,17 @@ a2enmod rewrite
 systemctl restart apache2
 cp ../htaccess/.htaccess /var/www/html
 chown -R www-data:www-data /var/www/html 
+
+
+# instalar el plugin wps-hide-login ejecutaríamos el siguiente comando:
+wp plugin install wps-hide-login --activate --path=/var/www/html --allow-root
+
+# instalar el plugin classic-widgets ejecutaríamos el siguiente comando:
+wp plugin install classic-widgets --activate --path=/var/www/html --allow-root
+
+# configurar el nombre de la nueva URL que vamos a utilizar para acceder al panel de administración con el plugin wps-hide-login ejecutaríamos el siguiente comando:
+
+wp option update whl_page "DELF" --path=/var/www/html --allow-root
+
+# Para instalar y activar el theme mindscape ejecutaríamos el siguiente comando:
+wp theme install mindscape --activate --path=/var/www/html --allow-root
