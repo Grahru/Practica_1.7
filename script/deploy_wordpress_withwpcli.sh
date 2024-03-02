@@ -1,14 +1,20 @@
 #!/bin/bash
-set -ex 
-#Muestra comandos
+
+# Muestra todos los comandos que se van ejecutando
+set -ex
+
 #Actualizar repo
 apt update
+
 #Actualizar paquetes
 # apt upgrade -y
+
+# Importamos el archivo de variables .env
 source .env
 
 # Eliminamos instalaciones previas
 rm -rf /tmp/wp-cli.phar
+
 # Descargamos el archivo wp-cli.phar del repositorio oficial de WP-CLI. Los archivos .phar son unos archivos similares a los archivos .jar de Java
 wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp
 
@@ -48,26 +54,32 @@ wp core install \
   --admin_email=$CERTIFICATE_EMAIL\
   --path=/var/www/html \
   --allow-root
+  
+# Actualizamos los plugins 
+  wp core update --path=/var/www/html --allow-root
 
-# Habilitar el módulo rewrite
-a2enmod rewrite
+  # Actualizamos los temas 
+  wp theme update --all --path=/var/www/html --allow-root
 
-# reiniciar el servicio de Apache.
+  # Instalo un tema
+  wp theme install $TEMA --activate --path=/var/www/html --allow-root
 
-systemctl restart apache2
-cp ../htaccess/.htaccess /var/www/html
-chown -R www-data:www-data /var/www/html 
+  # Actualizamos los plugins
+  wp plugin update --all --path=/var/www/html --allow-root
 
+  # Instalar y activar un  plugin
+  wp plugin install $PLUGIN --activate --path=/var/www/html --allow-root
+  wp plugin install $PLUGIN2 --activate --path=/var/www/html --allow-root
 
-# instalar el plugin wps-hide-login ejecutaríamos el siguiente comando:
-wp plugin install wps-hide-login --activate --path=/var/www/html --allow-root
+  # Habilitar permalinks
+  wp rewrite structure '/%postname%/' \
+    --path=/var/www/html \
+    --allow-root
+  
+  # Modificamos automaticamente el nombre que establece por defecto el plugin wpd-hide-login
+  wp option update whl_page $WORDPRESS_HIDE_LOGIN --path=/var/www/html --allow-root
+  # Copiamos el nuevo archivo .htaccess
+  cp ../htaccess/.htaccess /var/www/html
 
-# instalar el plugin classic-widgets ejecutaríamos el siguiente comando:
-wp plugin install classic-widgets --activate --path=/var/www/html --allow-root
-
-# configurar el nombre de la nueva URL que vamos a utilizar para acceder al panel de administración con el plugin wps-hide-login ejecutaríamos el siguiente comando:
-
-wp option update whl_page "DELF" --path=/var/www/html --allow-root
-
-# Para instalar y activar el theme mindscape ejecutaríamos el siguiente comando:
-wp theme install mindscape --activate --path=/var/www/html --allow-root
+  #Modificamos el propietario y el grupo del directorio /var/www/html
+  chown -R www-data:www-data /var/www/html
