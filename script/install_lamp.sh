@@ -18,6 +18,7 @@ apt install php libapache2-mod-php php-mysql -y
 #Copiar archivo de conf
 cp ../conf/000-default.conf /etc/apache2/sites-available
 
+a2enmod rewrite
 systemctl restart apache2
 
 #Copiar index
