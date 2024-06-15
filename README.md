@@ -29,22 +29,22 @@ La estructura del repositorio es la siguiente:
 
 Este script automatiza la instalación y configuración de WordPress utilizando WP-CLI sobre una pila LAMP. A continuación se explican los pasos llevados a cabo:
 
-1. **Preparación del Entorno:**
+### **Preparación del Entorno:**
    - Se configura para mostrar todos los comandos que se ejecutan (`set -ex`).
    - Se actualiza la lista de paquetes disponibles (`apt update`).
    - Se importan las variables del archivo `.env`.
    - Se eliminan instalaciones previas de wp-cli (`rm -rf /tmp/wp-cli.phar`).
 
-2. **Instalación de WP-CLI:**
+### **Instalación de WP-CLI:**
    - Se descarga el archivo `wp-cli.phar` del repositorio oficial de WP-CLI.
    - Se le asignan permisos de ejecución y se mueve a `/usr/local/bin/` con el nombre `wp`.
 
-3. **Descarga y Configuración de WordPress:**
+### **Descarga y Configuración de WordPress:**
    - Se eliminan instalaciones anteriores de WordPress (`rm -rf /var/www/html/*`).
    - Se descarga el código fuente de WordPress en español al directorio `/var/www/html` utilizando `wp core download`.
    - Se crea el archivo de configuración `wp-config.php` para WordPress con los datos de la base de datos.
 
-4. **Instalación y Configuración Adicional:**
+### **Instalación y Configuración Adicional:**
    - Se instala y configura WordPress con `wp core install`, proporcionando información como la URL, título, nombre de usuario y contraseña del administrador, y dirección de correo electrónico.
    - Se actualizan los plugins y temas con `wp core update`, `wp theme update`, y `wp plugin update`.
    - Se instala y activa un tema específico con `wp theme install --activate`.
@@ -53,6 +53,11 @@ Este script automatiza la instalación y configuración de WordPress utilizando 
    - Se modifica el nombre de acceso predeterminado proporcionado por el plugin wpd-hide-login.
    - Se copia el archivo `.htaccess` desde el directorio `../htaccess/` al directorio raíz de WordPress.
    - Se modifica el propietario y grupo del directorio `/var/www/html` para que sea accesible por el servidor web.
+## Ejecucion de los Scripts
+### install_lamp
+![](images/Install.PNG)
 
+### deploy_wordpress_withwpcli
+![](images/deploy.PNG)
 ## Pagina Funcionando
-![](images/1.7.png)
+![](images/Permalink.PNG)
